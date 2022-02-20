@@ -1,0 +1,62 @@
+<!doctype html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- <div><center><button
+              type="submit"
+              class="btn btn-success"
+              id="joinGameButton"
+            >Join Game</center></div> -->
+<center>
+<div id="canvasesdiv" style="position:relative; width:838px; height:48px">
+<canvas id="layer_letters"
+style="z-index: 1;
+position:absolute;
+left:0px;
+top:0px;
+" height="48px" width="838px">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+<canvas id="layer_smoke"
+style="z-index: 2;
+position:absolute;
+left:0px;
+top:0px;
+" height="48px" width="838px">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+</div>
+</center>
+
+<!-- <div><iframe src="https://giphy.com/embed/ftfVpeWsm95QgGfOZ8" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/desktoppaints-smoke-puff-smog-ftfVpeWsm95QgGfOZ8">via GIPHY</a></p></div> -->
+<!-- <center><h1>Spirits present: <span id="numPlayersDisplay"></span> Letter: <span id="letterDisplay"></span></h1></center> -->
+<!-- <input type="text" placeholder="Enter Ouija Code" id="ouijaCodeInput"/> -->
+<!-- <center><h1>X: <span id="XcoordDisplay"></span> Y: <span id="YcoordDisplay"></span></h1></center> -->
+<section>
+<center>
+<!-- <button type="submit" class="btn btn-success" id="smokeBtn">Make Smoke</button> -->
+<div id="canvasesdiv" style="position:relative; width:838px; height:554px">
+<canvas id="layer1"
+style="z-index: 1;
+position:absolute;
+left:0px;
+top:0px;
+" height="554px" width="838px">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+<canvas id="layer2"
+style="z-index: 2;
+position:absolute;
+left:0px;
+top:0px;
+" height="554px" width="838px">
+This text is displayed if your browser does not support HTML5 Canvas.
+</canvas>
+</div>
+</center>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+<script type="text/javascript" src="index.js"></script>
