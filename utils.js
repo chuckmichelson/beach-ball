@@ -8,11 +8,8 @@ const { PEOPLE_RADIUS } = require('./constants');
 
 module.exports = {
   makeid,
-  // ouijaGoToLetter,
-  // ouijaGetLetter,
   makeArray,
   shuffleArray,
-  // getNextBounce,
   trimActivePlayerList,
   decrementAfterImage,
   sleep,
@@ -29,70 +26,6 @@ function makeid(length) {
    }
    return result;
 }
-
-// function ouijaGoToLetter(state, letter) {
-//    // console.log("made it to ouijaGoToLetter")
-//    // xstart = state.planchette.pos.x;
-//    // xend = OUIJA_CODES[letter].x;
-//    // ystart = state.planchette.pos.y;
-//    // yend = OUIJA_CODES[letter].y;
-//    // for ( var i = 0; i < 100; i++ ) {
-
-//    // }
-//    ouijaAlphabetLength = Object.keys(OUIJA_CODES).length;
-//    for ( var i = 0; i < ouijaAlphabetLength - 1; i++ ) {
-//       if (OUIJA_CODES[i].letter === letter) {
-//          state.planchette.pos.x = OUIJA_CODES[i].x
-//          state.planchette.pos.y = OUIJA_CODES[i].y
-//       }
-//    }
-//   return state;
-// }
-
-// function ouijaGetLetter(state) {
-//    letter = '_';
-
-//    // ouijaAlphabetLength = Object.keys(OUIJA_CODES).length;
-//    ouijaAlphabetLength = state.numSpirits;
-//    // console.log(ouijaAlphabetLength);
-//    // console.log("ouijaAlphabetLength: " + ouijaAlphabetLength);
-//    // console.log("state.planchette.pos.x: " + state.planchette.pos.x);
-//    posx = state.planchette.pos.x;
-//    posy = state.planchette.pos.y;
-
-//    delta_theta = 360 / ouijaAlphabetLength;
-//    for ( var i = 0; i < ouijaAlphabetLength; i++ ) {
-//       // console.log(i)
-//       theta = i * delta_theta;
-//       // console.log(theta)
-//       codx = CANVAS_WIDTH / 2 + Math.round(PEOPLE_RADIUS * Math.cos(theta  * (Math.PI / 180)));
-//       cody = CANVAS_HEIGHT / 2 + Math.round(PEOPLE_RADIUS * Math.sin(theta  * (Math.PI / 180)));
-//       distance = Math.sqrt(Math.pow(codx - posx, 2) + Math.pow(cody - posy, 2));
-//       // console.log(distance)
-//       if (distance <= 15) {
-//          letter = '+';
-//          // console.log('bounce');
-//       }
-//    }
-//    if (posy >= 494 && posx >= 280 && posx <= 562) {
-//       letter = '.'; // i.e., GOODBYE
-//    }
-//    return letter;
-// }
-
-
-// function getNextBounce(state) {
-//    const current_bounce = state.nextBouncePlayerNum;
-//    console.log("current_bounce: " + current_bounce)
-//    test_array = makeArray(state.numActivePlayers - 1);
-//    console.log("test_array: " + test_array)
-//    bounce_array = shuffleArray(makeArray(state.numActivePlayers))[0];
-//    next_bounce = bounce_array[0];
-//    if (next_bounce === current_bounce) {
-//       next_bounce = bounce_array[1];
-//    }
-//    return next_bounce;
-// }
 
 
 function makeArray(N) {
@@ -151,7 +84,6 @@ function trimActivePlayerList(state, allUsers) {
    return state;
 }
 
-
 function decrementAfterImage(state) {
 
     for ( var j = state.activePlayers.length - 1; j >= 0; j-- ) {
@@ -174,7 +106,7 @@ function sleep(ms) {
 
 async function callSleep(ms) {
   // console.log('calling');
-  const result = await sleep(ms);
   console.log("made it to callSleep");
+  const result = await sleep(ms);
   // expected output: "resolved"
 }

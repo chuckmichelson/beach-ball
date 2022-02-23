@@ -36,16 +36,12 @@ module.exports = {
 function initGame() {
   // console.log("*****made it to initGame()")
   state = createGameState();
-  state.current_game_active = true;
-  // state = ouijaGoToLetter(state, '5');
   start = 0;
   return state;
 }
 
 function createGameState() {
   return {
-    current_game_active: false,
-    numSpirits: 1,
     numActivePlayers: 0,
     activePlayers: [],
     bounce_count: 0,
@@ -67,24 +63,16 @@ function createGameState() {
         y: 0,
       }
     },
-    previous_letter: '_',
-    current_letter: '_',
-    agreed_letters: '',
   };
 }
 
-
-// function addPlayer(state) {
-//   state.numSpirits += 1;
-//   state.numActivePlayers += 1;
-//   console.log(state.numSpirits)
-// }
 
 function addPlayer(state, clientid, playerInitials) {
   posx = state.planchette.pos.x;
   posy = state.planchette.pos.y;
   freespace = false;
   while (freespace == false) {
+    // console.log("freespace: " + freespace)
     randx = Math.floor(Math.random() * CANVAS_WIDTH - 4 * AVATAR_RADIUS) + 2 * AVATAR_RADIUS;
     randy = Math.floor(Math.random() * CANVAS_HEIGHT - 4 * AVATAR_RADIUS) + 2 * AVATAR_RADIUS;
     distance = Math.sqrt(Math.pow(randx - posx, 2) + Math.pow(randy - posy, 2));
@@ -102,17 +90,15 @@ function addPlayer(state, clientid, playerInitials) {
     posx: randx,
     posy: randy,
     velx: 0,
-    vely: 0
+    vely: 0,
   };
-
-  state.numSpirits += 1;
   state.numActivePlayers += 1;
-  // console.log(newPlayer)
   return newPlayer;
 }
 
 function gameLoop(state) {
 
+  // console.log("made it to gameLoop")
   if (!state) {
     return;
   }
@@ -173,31 +159,6 @@ function gameLoop(state) {
     state.planchette.vel_unit.y = 0;
   }
 
-  // // read letter
-  // state.previous_letter = state.current_letter;
-  // state.current_letter = ouijaGetLetter(state);
-
-  // // run timer to determine agreed letter
-  // if (state.current_letter == '_') {
-  //   start = Date.now();
-  // }
-  // if (state.current_letter != state.previous_letter) {
-  //   start = Date.now();
-  // }
-  // if (Date.now() - start > AGREE_DURATION && state.current_letter != '_') {
-  //   state.agreed_letters += state.current_letter;
-  //   // console.log("AGREED: " + state.agreed_letters)
-  //   test_bounce = getNextBounce(state);
-  //   // console.log("test_bounce: " + test_bounce)
-
-  //   // state.nextBouncePlayerNum = getNextBounce(state);
-  //   start = Date.now();
-  // }
-
-  // last_agreed = state.agreed_letters.substr(state.agreed_letters.length - 1);
-  // if(last_agreed == '.') {
-  //     return true;
-  // }
   // reset all player velocities to 0 so the user must hold down the arrow keys
   state.x = Array(5).fill(0);
   state.y = Array(5).fill(0);

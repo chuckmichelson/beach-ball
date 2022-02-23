@@ -1,10 +1,17 @@
 const FRAME_RATE = 20;
-const CANVAS_WIDTH = 838;
-const CANVAS_HEIGHT = 554;
-const PLANCHETTE_WIDTH = 120;
-const PLANCHETTE_HEIGHT = 120;
+const CANVAS_WIDTH = 360;
+const CANVAS_HEIGHT = 360;
+const PLANCHETTE_WIDTH = 64;
+const PLANCHETTE_HEIGHT = 64;
 const MAX_PLAYERS_PER_ROOM = 100;
-const AGREE_DURATION = 3000;
+const AGREE_DURATION = 100;
+const PEOPLE_RADIUS = 120;
+const AVATAR_RADIUS = 20;
+const BEACH_BALL_MASS = 0.1; // in kg
+const BEACH_BALL_DIAMETER = 0.64; // in meters (24" ball)
+const DRAG_COEFFICIENT = -3; // air resistance, in arbitrary units
+const BOUNCE_VELOCITY = 100; // initial velocity of ball right after bounce, in m/s
+
 
 const OUIJA_CODES = {
     0 : {letter : '+', x : 204, y : 87 }, // i.e., YES
@@ -58,4 +65,10 @@ module.exports = {
   MAX_PLAYERS_PER_ROOM,
   OUIJA_CODES,
   AGREE_DURATION,
+  PEOPLE_RADIUS,
+  AVATAR_RADIUS,
+  BEACH_BALL_MASS,
+  BEACH_BALL_DIAMETER,
+  DRAG_COEFFICIENT,
+  BOUNCE_VELOCITY,
 }

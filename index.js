@@ -4,13 +4,12 @@ const PLANCHETTE_WIDTH = 64;
 const PLANCHETTE_HEIGHT = 64;
 
 // ***** CHANGE THIS TO RUN ON HEROKU
-const socket = io('http://localhost:3000');
-// const socket = io('https://aqueous-inlet-30626.herokuapp.com/');
+// const socket = io('http://localhost:3000');
+const socket = io('https://young-anchorage-12634.herokuapp.com/');
 
-socket.on('init', handleInit);
+socket.on('initclient', handleInitClient);
 socket.on('gameState', handleGameState);
 socket.on('gameOver', handleGameOver);
-socket.on('gameCode', handleGameCode);
 socket.on('gameScore', handleScore);
 socket.on('unknownCode', handleUnknownCode);
 
@@ -52,6 +51,10 @@ setInterval(function(){ joy.y=Joy2.GetY(); }, 50);
 joinGameBtn.addEventListener('click', joinGame);
 
 
+// setInterval(displayHello, 1000);
+// function displayHello() {
+//   document.getElementById("demo").innerHTML += "Hello";
+// }
 
 joinRoom();
 
@@ -65,14 +68,15 @@ function setImageVisible(id, visible) {
 }
 
 
-function newGame() {
-  console.log("made it to NewGame")
-  socket.emit('newGame');
-}
+// function newGame() {
+//   console.log("made it to NewGame")
+//   socket.emit('newGame');
+// }
 
 function joinRoom() {
-  console.log("made it to joinRoom")
+  console.log("Joining room...")
   socket.emit('joinRoom', 'AAAAA');
+  // console.log("Joined")
 }
 
 function joinGame() {
@@ -84,13 +88,12 @@ function joinGame() {
   // document.getElementById("bounceButton").style.display = "block";
   // document.getElementById("bounceButton").style.visibility="visible";
   joyDiv.style.display = 'block';
-
   init();
 }
 
 
-let myPlayerID = "";
-let gameActive = false;
+let myClientID = "";
+// let gameActive = false;
 
 
 function init() {
@@ -108,31 +111,32 @@ function init() {
   document.addEventListener('keydown', keyDown);
   // bounceButton.addEventListener('click', buttonDown);
   // console.log("added keydown event listener")
-  gameActive = true;
+  // gameActive = true;
 
 }
 
 function keyDown(e) {
-  if (gameActive == true) {
+  // if (gameActive == true) {
     socket.emit('keydown', e.keyCode);
-  }
+  // }
 }
 
 function buttonDown(e) {
-  if (gameActive == true) {
+  // if (gameActive == true) {
     socket.emit('buttondown');
-  }
+  // }
 }
 
 function emitJoyStick(joy) {
-  if (gameActive == true) {
-    // console.log("joy.x: " + joy.x)
+  // if (gameActive == true) {
+    console.log("joy.x: " + joy.x + ", joy.y: " + joy.y)
     socket.emit('joydown', JSON.stringify(joy));
-  }
+  // }
 }
 
 function paintGame(state) {
 
+  console.log("state.numActivePlayers: " + state.numActivePlayers)
 
   // draw beach background image
   const layer1 = document.getElementById('layer1');
@@ -151,12 +155,12 @@ function paintGame(state) {
   myPlayerIndex = 0;
   // delta_theta = 360 / state.numActivePlayers;
   // console.log("state.numActivePlayers: " + state.numActivePlayers)
-  // console.log("myPlayerID: " + myPlayerID)
+  // console.log("myClientID: " + myClientID)
 
   for (let i = 0; i < state.numActivePlayers; i++) {
     // theta = i * delta_theta;
     ctx2.strokeStyle = 'black';
-    if (state.activePlayers[i].clientid ===  myPlayerID) {
+    if (state.activePlayers[i].clientid ===  myClientID) {
       ctx2.lineWidth = 4;
     } else {
       ctx2.lineWidth = 2;
@@ -229,73 +233,27 @@ function paintGame(state) {
 
 }
 
-function handleInit(clientid) {
-  myPlayerID = clientid;
-  console.log("*****myPlayerID: " + myPlayerID)
+function handleInitClient(clientid) {
+  myClientID = clientid;
+  console.log("myClientID: " + myClientID)
   init();
 }
 
 function handleGameState(gameState) {
   console.log("made it to handleGameState")
-  if (!gameActive) {
-    return;
-  }
+  // if (!gameActive) {
+    // return;
+  // }
   gameState = JSON.parse(gameState);
+  // console.log("gameState.planchette.pos.x: " + gameState.planchette.pos.x)
+  console.log("joy.x: " + joy.x)
   emitJoyStick(joy);
   requestAnimationFrame(() => paintGame(gameState));
 }
 
 function handleGameOver(state) {
-  // if (!gameActive) {
-  //   console.log("game not active")
-  //   return;
-  // }
-
   state = JSON.parse(state);
-
-  // clear the top of the screen
-  const layer_agreed = document.getElementById("layer_agreed");
-  const agreed_ctx = layer_agreed.getContext("2d");
-  agreed_ctx.fillStyle = 'black';
-  agreed_ctx.clearRect(0, 0, 838, 48);
-
-  const right_layer2 = document.getElementById("right_layer2");
-  const right_ctx2 = right_layer2.getContext("2d");
-  right_ctx2.clearRect(0, 0, 100, 554);
-
-  // remove the planchette
-  const layer2 = document.getElementById('layer2');
-  const ctx2 = layer2.getContext('2d');
-  ctx2.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-  // remove the ouija board
-  const layer1 = document.getElementById('layer1');
-  const ctx1 = layer1.getContext('2d');
-  ctx1.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-  // display a dimmed board
-  const dim = new Image();
-  dim.src = "images/ouija_board_dim.png";
-  ctx1.drawImage(dim,0,0);
-
-  // game over messages
-  const layer4 = document.getElementById('layer4');
-  const ctx4 = layer4.getContext('2d');
-  ctx4.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  ctx4.fillStyle = "white";
-  ctx4.textAlign = "center";
-  ctx4.font = "96px Copperplate, Papyrus, fantasy";
-  var final_message = state.agreed_letters.substring(0, state.agreed_letters.length - 1);;
-  ctx4.fillText(final_message, CANVAS_WIDTH/2, CANVAS_HEIGHT/2);
-
-  // data = JSON.parse(data);
-  gameActive = false;
-
-}
-
-function handleGameCode(gameCode) {
-  // console.log("made it to handleGameCode()")
-  //gameCodeDisplay.innerText = gameCode;
+  // gameActive = false;
 }
 
 function handleScore(gameScore) {
