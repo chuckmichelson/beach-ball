@@ -5,7 +5,7 @@ const PLANCHETTE_HEIGHT = 64;
 
 // ***** CHANGE THIS TO RUN ON HEROKU
 // const socket = io('http://localhost:3000');
-const socket = io('https://aqueous-inlet-30626.herokuapp.com/');
+const socket = io('https://gentle-tundra-06259.herokuapp.com/');
 
 socket.on('initclient', handleInitClient);
 socket.on('gameState', handleGameState);
