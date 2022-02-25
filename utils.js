@@ -58,23 +58,17 @@ function shuffleArray(array) {
 
 function trimActivePlayerList(state, allUsers) {
 
-   // console.log("allUsers.length: " + allUsers.length + ", state.activePlayers.length: " + state.activePlayers.length)
-
    for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
-      // console.log("state.activePlayers[i].clientid: " + state.activePlayers[i].clientid)
-      // console.log("i: " + i)
+
       thisClientID = state.activePlayers[i].clientid;
       thisInitials = state.activePlayers[i].initials;
-      // console.log("thisClientID: " + thisClientID)
+
       match = false;
       for ( var j = 0; j < allUsers.length; j++ ) {
-         // console.log("j out of allUsers.length: " + j + " / " + allUsers.length)
          if ( thisClientID === allUsers[j] ) {
             match = true;
          }
-         // console.log("thisClientID: " + thisClientID + ", allUsers[j]: " + allUsers[j] + ", match: " + match)
       }
-      // console.log("match: " + match)
       if (match === false) {
          console.log("Player " + thisClientID + " (" + thisInitials + ")" + " left the room")
          state.activePlayers.splice(i, 1);

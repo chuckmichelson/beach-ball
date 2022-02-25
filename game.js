@@ -227,7 +227,6 @@ function recordJoystick(state, clientid, joy) {
 
 function updateVelocityAndPosition(state) {
 
-
   // players
   for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
     // console.log("state.activePlayers[i].joyx: " + state.activePlayers[i].joyx)
@@ -281,8 +280,6 @@ function updateVelocityAndPosition(state) {
 
   state.planchette.pos.x = x + BOUNCE_VELOCITY * velunitx * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunitx * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
   state.planchette.pos.y = y + BOUNCE_VELOCITY * velunity * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunity * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
-  // state.planchette.pos.x = state.planchette.last_bounce.x + BOUNCE_VELOCITY * state.planchette.vel_unit.x * time_since_bounce / 1000;
-  // state.planchette.pos.y = state.planchette.last_bounce.y + BOUNCE_VELOCITY * state.planchette.vel_unit.y * time_since_bounce / 1000;
 
   return state;
 }
