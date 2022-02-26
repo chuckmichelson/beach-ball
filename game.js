@@ -1,11 +1,9 @@
 const { FRAME_RATE } = require('./constants');
 const { CANVAS_WIDTH } = require('./constants');
 const { CANVAS_HEIGHT } = require('./constants');
-const { PLANCHETTE_WIDTH } = require('./constants');
-const { PLANCHETTE_HEIGHT } = require('./constants');
+const { BALL_WIDTH } = require('./constants');
+const { BALL_HEIGHT } = require('./constants');
 const { MAX_PLAYERS_PER_ROOM } = require('./constants');
-const { AGREE_DURATION } = require('./constants');
-const { PEOPLE_RADIUS } = require('./constants');
 const { AVATAR_RADIUS } = require('./constants');
 const { BEACH_BALL_MASS } = require('./constants');
 const { BEACH_BALL_DIAMETER } = require('./constants');
@@ -13,7 +11,7 @@ const { DRAG_COEFFICIENT } = require('./constants');
 const { BOUNCE_VELOCITY } = require('./constants');
 
 const BEACH_BALL_ACCELERATION = DRAG_COEFFICIENT / BEACH_BALL_MASS;
-const PIXELS_PER_METER = PLANCHETTE_WIDTH / BEACH_BALL_DIAMETER;
+const PIXELS_PER_METER = BALL_WIDTH / BEACH_BALL_DIAMETER;
 
 const { makeid } = require('./utils');
 // const { ouijaGoToLetter } = require('./utils');
@@ -76,7 +74,7 @@ function addPlayer(state, clientid, playerInitials) {
     randx = Math.floor(Math.random() * CANVAS_WIDTH - 4 * AVATAR_RADIUS) + 2 * AVATAR_RADIUS;
     randy = Math.floor(Math.random() * CANVAS_HEIGHT - 4 * AVATAR_RADIUS) + 2 * AVATAR_RADIUS;
     distance = Math.sqrt(Math.pow(randx - posx, 2) + Math.pow(randy - posy, 2));
-    if ( distance > PLANCHETTE_WIDTH / 2 + AVATAR_RADIUS ) {
+    if ( distance > BALL_WIDTH / 2 + AVATAR_RADIUS ) {
       freespace = true;
     }
   }
@@ -137,16 +135,16 @@ function gameLoop(state) {
 
   // keep the planchette on the board
   lost_ball = false;
-  if (state.planchette.pos.x < 0 - PLANCHETTE_WIDTH / 2 + 6) {
+  if (state.planchette.pos.x < 0 - BALL_WIDTH / 2 + 6) {
     lost_ball = true;
   }
-  if (state.planchette.pos.x > CANVAS_WIDTH + PLANCHETTE_WIDTH / 2 - 6) {
+  if (state.planchette.pos.x > CANVAS_WIDTH + BALL_WIDTH / 2 - 6) {
     lost_ball = true;
   }
-  if (state.planchette.pos.y < 0 - PLANCHETTE_WIDTH / 2 + 6) {
+  if (state.planchette.pos.y < 0 - BALL_WIDTH / 2 + 6) {
     lost_ball = true;
   }
-  if (state.planchette.pos.y > CANVAS_HEIGHT + PLANCHETTE_WIDTH / 2 - 6) {
+  if (state.planchette.pos.y > CANVAS_HEIGHT + BALL_WIDTH / 2 - 6) {
     lost_ball = true;
   }
   if (lost_ball === true) {
@@ -259,15 +257,15 @@ function updateVelocityAndPosition(state) {
     // ball
     time_since_bounce = Date.now() - state.last_bounce_start;
     // console.log("time_since_bounce: " + time_since_bounce)
-    if (distance <= PLANCHETTE_WIDTH / 2 + AVATAR_RADIUS) {   // bounce
+    if (distance <= BALL_WIDTH / 2 + AVATAR_RADIUS) {   // bounce
       console.log("bounce")
       console.log(randomWords(5));
       state.last_bounce_start = Date.now();
       state.planchette.vel_unit.x = (bx - px) / distance; // normalized unit vector
       state.planchette.vel_unit.y = (by - py) / distance; // normalized unit vector
       state.bounce_count += 1;
-      state.planchette.pos.x += (PLANCHETTE_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.planchette.vel_unit.x;
-      state.planchette.pos.y += (PLANCHETTE_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.planchette.vel_unit.y;
+      state.planchette.pos.x += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.planchette.vel_unit.x;
+      state.planchette.pos.y += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.planchette.vel_unit.y;
       state.planchette.last_bounce.x = state.planchette.pos.x;
       state.planchette.last_bounce.y = state.planchette.pos.y;
     }

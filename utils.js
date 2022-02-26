@@ -1,9 +1,6 @@
 const { FRAME_RATE } = require('./constants');
-const { OUIJA_CODES } = require('./constants');
 const { CANVAS_WIDTH } = require('./constants');
 const { CANVAS_HEIGHT } = require('./constants');
-const { PEOPLE_RADIUS } = require('./constants');
-
 
 
 module.exports = {
