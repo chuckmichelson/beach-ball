@@ -47,7 +47,7 @@ function createGameState() {
     x: Array(100).fill(0),
     y: Array(100).fill(0),
     pressed: Array(255).fill(false),
-    planchette: {
+    ball: {
       pos: {
         x: CANVAS_WIDTH / 2,
         y: CANVAS_HEIGHT / 2,
@@ -66,8 +66,8 @@ function createGameState() {
 
 
 function addPlayer(state, clientid, playerInitials) {
-  posx = state.planchette.pos.x;
-  posy = state.planchette.pos.y;
+  posx = state.ball.pos.x;
+  posy = state.ball.pos.y;
   freespace = false;
   while (freespace == false) {
     // console.log("freespace: " + freespace)
@@ -113,19 +113,19 @@ function gameLoop(state) {
   //   // console.log("index: " + i)
   //   if (state.x[i] === 1 ) {
   //     // console.log("RIGHT")
-  //     state.planchette.pos.x += 3;
+  //     state.ball.pos.x += 3;
   //   }
   //   if (state.x[i] === -1 ) {
   //     // console.log("LEFT")
-  //     state.planchette.pos.x += -3;
+  //     state.ball.pos.x += -3;
   //   }
   //   if (state.y[i] === 1 ) {
   //     // console.log("DOWN")
-  //     state.planchette.pos.y += 3;
+  //     state.ball.pos.y += 3;
   //   }
   //   if (state.y[i] === -1 ) {
   //     // console.log("UP")
-  //     state.planchette.pos.y += -3;
+  //     state.ball.pos.y += -3;
   //   }
 
   //   // once we read the velocity, zero it out
@@ -134,28 +134,28 @@ function gameLoop(state) {
 
   // }
 
-  // keep the planchette on the board
+  // keep the ball on the board
   lost_ball = false;
-  if (state.planchette.pos.x < 0 - BALL_WIDTH / 2 + 6) {
+  if (state.ball.pos.x < 0 - BALL_WIDTH / 2 + 6) {
     lost_ball = true;
   }
-  if (state.planchette.pos.x > CANVAS_WIDTH + BALL_WIDTH / 2 - 6) {
+  if (state.ball.pos.x > CANVAS_WIDTH + BALL_WIDTH / 2 - 6) {
     lost_ball = true;
   }
-  if (state.planchette.pos.y < 0 - BALL_WIDTH / 2 + 6) {
+  if (state.ball.pos.y < 0 - BALL_WIDTH / 2 + 6) {
     lost_ball = true;
   }
-  if (state.planchette.pos.y > CANVAS_HEIGHT + BALL_WIDTH / 2 - 6) {
+  if (state.ball.pos.y > CANVAS_HEIGHT + BALL_WIDTH / 2 - 6) {
     lost_ball = true;
   }
   if (lost_ball === true) {
-    state.planchette.pos.x = CANVAS_WIDTH / 2;
-    state.planchette.pos.y = CANVAS_HEIGHT / 2;
+    state.ball.pos.x = CANVAS_WIDTH / 2;
+    state.ball.pos.y = CANVAS_HEIGHT / 2;
     state.bounce_count = 0;
-    state.planchette.last_bounce.x = state.planchette.pos.x;
-    state.planchette.last_bounce.y = state.planchette.pos.y;
-    state.planchette.vel_unit.x = 0;
-    state.planchette.vel_unit.y = 0;
+    state.ball.last_bounce.x = state.ball.pos.x;
+    state.ball.last_bounce.y = state.ball.pos.y;
+    state.ball.vel_unit.x = 0;
+    state.ball.vel_unit.y = 0;
   }
 
   // reset all player velocities to 0 so the user must hold down the arrow keys
@@ -249,8 +249,8 @@ function updateVelocityAndPosition(state) {
     // distance
     px = state.activePlayers[i].posx; // + Math.random() / 100;
     py = state.activePlayers[i].posy; // + Math.random() / 100;
-    bx = state.planchette.pos.x; // + Math.random() / 100;
-    by = state.planchette.pos.y; // + Math.random() / 100;
+    bx = state.ball.pos.x; // + Math.random() / 100;
+    by = state.ball.pos.y; // + Math.random() / 100;
     // console.log("px: " + px + ", py: " + py + ", bx: " + bx + ", by: " + by)
     distance = Math.sqrt(Math.pow(px - bx, 2) + Math.pow(py - by, 2));
     // console.log(distance)
@@ -262,23 +262,23 @@ function updateVelocityAndPosition(state) {
       console.log("bounce")
       console.log(randomWords(5));
       state.last_bounce_start = Date.now();
-      state.planchette.vel_unit.x = (bx - px) / distance; // normalized unit vector
-      state.planchette.vel_unit.y = (by - py) / distance; // normalized unit vector
+      state.ball.vel_unit.x = (bx - px) / distance; // normalized unit vector
+      state.ball.vel_unit.y = (by - py) / distance; // normalized unit vector
       state.bounce_count += 1;
-      state.planchette.pos.x += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.planchette.vel_unit.x;
-      state.planchette.pos.y += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.planchette.vel_unit.y;
-      state.planchette.last_bounce.x = state.planchette.pos.x;
-      state.planchette.last_bounce.y = state.planchette.pos.y;
+      state.ball.pos.x += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.ball.vel_unit.x;
+      state.ball.pos.y += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.ball.vel_unit.y;
+      state.ball.last_bounce.x = state.ball.pos.x;
+      state.ball.last_bounce.y = state.ball.pos.y;
     }
   }
-  x = state.planchette.last_bounce.x;
-  y = state.planchette.last_bounce.y;
-  velunitx = state.planchette.vel_unit.x;
-  velunity = state.planchette.vel_unit.y;
+  x = state.ball.last_bounce.x;
+  y = state.ball.last_bounce.y;
+  velunitx = state.ball.vel_unit.x;
+  velunity = state.ball.vel_unit.y;
 
 
-  state.planchette.pos.x = x + BOUNCE_VELOCITY * velunitx * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunitx * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
-  state.planchette.pos.y = y + BOUNCE_VELOCITY * velunity * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunity * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
+  state.ball.pos.x = x + BOUNCE_VELOCITY * velunitx * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunitx * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
+  state.ball.pos.y = y + BOUNCE_VELOCITY * velunity * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunity * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
 
   return state;
 }
