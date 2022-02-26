@@ -156,50 +156,50 @@ function paintGame(state) {
   if (numActivePlayers == undefined) {
     numActivePlayers = '1';
   }
-  top_ctx1.fillText(numActivePlayers, 45, 90);
+  top_ctx1.fillText(numActivePlayers, 60, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
   display_text = "Players"
   if (numActivePlayers == 1) {
     display_text = "Player"
   }
-  top_ctx1.fillText(display_text, 45, 120);
+  top_ctx1.fillText(display_text, 60, 120);
 
-  // display number of rounds
-  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
-  bounce_count = state.bounce_count;
-  top_ctx1.fillText(bounce_count, 135, 90);
-  top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
-  top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
-  display_text = "Rounds"
-  if (bounce_count == 1) {
-    display_text = "Round"
-  }
-  top_ctx1.fillText(display_text, 135, 120);
+  // // display number of rounds
+  // top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
+  // bounce_count = state.bounce_count;
+  // top_ctx1.fillText(bounce_count, 135, 90);
+  // top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
+  // top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
+  // display_text = "Rounds"
+  // if (bounce_count == 1) {
+  //   display_text = "Round"
+  // }
+  // top_ctx1.fillText(display_text, 135, 120);
 
   // display number of bounces
   top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
   bounce_count = state.bounce_count;
-  top_ctx1.fillText(bounce_count, 225, 90);
+  top_ctx1.fillText(bounce_count, 180, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
   display_text = "Bounces"
   if (bounce_count == 1) {
     display_text = "Bounce"
   }
-  top_ctx1.fillText(display_text, 225, 120);
+  top_ctx1.fillText(display_text, 180, 120);
 
   // display score (each bounce adds n points, where n is the number of players in the room)
   top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
-  bounce_count = state.bounce_count;
-  top_ctx1.fillText(bounce_count, 315, 90);
+  score_count = state.score_count;
+  top_ctx1.fillText(score_count, 300, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
   display_text = "Points"
   if (bounce_count == 1) {
     display_text = "Point"
   }
-  top_ctx1.fillText(display_text, 315, 120);
+  top_ctx1.fillText(display_text, 300, 120);
 }
 
 function handleInitClient(clientid) {

@@ -41,7 +41,9 @@ function createGameState() {
   return {
     numActivePlayers: 0,
     activePlayers: [],
+    round_count: 0,
     bounce_count: 0,
+    score_count: 0,
     last_bounce_start: Date.now(),
     x: Array(100).fill(0),
     y: Array(100).fill(0),
@@ -114,6 +116,7 @@ function gameLoop(state) {
     for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
       state.activePlayers[i].bounced = false;
       state.activePlayers[i].bouncetimestap = null;
+      state.round_count += 1;
     }
   }
 
@@ -164,7 +167,9 @@ function gameLoop(state) {
   if (lost_ball === true) {
     state.ball.pos.x = CANVAS_WIDTH / 2;
     state.ball.pos.y = CANVAS_HEIGHT / 2;
+    state.round_count = 0;
     state.bounce_count = 0;
+    state.score_count = 0;
     state.ball.last_bounce.x = state.ball.pos.x;
     state.ball.last_bounce.y = state.ball.pos.y;
     state.ball.vel_unit.x = 0;
@@ -293,6 +298,7 @@ function updateVelocityAndPosition(state) {
       state.ball.vel_unit.x = (bx - px) / distance; // normalized unit vector
       state.ball.vel_unit.y = (by - py) / distance; // normalized unit vector
       state.bounce_count += 1;
+      state.score_count += state.numActivePlayers;
       state.ball.pos.x += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.ball.vel_unit.x;
       state.ball.pos.y += (BALL_WIDTH / 2 + AVATAR_RADIUS + 5 - distance) * state.ball.vel_unit.y;
       state.ball.last_bounce.x = state.ball.pos.x;
