@@ -10,6 +10,7 @@ const { BEACH_BALL_DIAMETER } = require('./constants');
 const { DRAG_COEFFICIENT } = require('./constants');
 const { BOUNCE_VELOCITY } = require('./constants');
 const { JOYSTICK_MULTIPLIER } = require('./constants');
+const { BOUNCE_IMAGE_DECAY } = require('./constants');
 
 const BEACH_BALL_ACCELERATION = DRAG_COEFFICIENT / BEACH_BALL_MASS;
 const PIXELS_PER_METER = BALL_WIDTH / BEACH_BALL_DIAMETER;
@@ -91,6 +92,8 @@ function addPlayer(state, clientid, playerInitials) {
     posy: randy,
     velx: 0,
     vely: 0,
+    bounced: false,
+    bouncetimestap: null,
   };
   state.numActivePlayers += 1;
   return newPlayer;
@@ -106,8 +109,6 @@ function gameLoop(state) {
 
   // update player positions
   state = updateVelocityAndPosition(state);
-
-
 
   // // decision rule
   // for (let i = 0; i < MAX_PLAYERS_PER_ROOM; i++) {
@@ -233,7 +234,7 @@ function updateVelocityAndPosition(state) {
 
     // update this player's position based on time elapsed since last joystick input
     joystick_vector_length = Math.sqrt(Math.pow(state.activePlayers[i].joyx, 2) + Math.pow(state.activePlayers[i].joyy, 2));
-    console.log("joystick_vector_length: " + joystick_vector_length)
+    // console.log("joystick_vector_length: " + joystick_vector_length)
     if (joystick_vector_length < 0.001) {
       joystick_vector_length = 0.001;
     }
@@ -242,6 +243,10 @@ function updateVelocityAndPosition(state) {
     state.activePlayers[i].posx += state.activePlayers[i].velx * (Date.now() - state.activePlayers[i].joytimestamp);
     state.activePlayers[i].posy += state.activePlayers[i].vely * (Date.now() - state.activePlayers[i].joytimestamp);
 
+    // update this player's avatar color (based on time since they bounced the ball)
+    if (state.activePlayers[i].bounced === true) {
+      state.activePlayers[i].afterimage = Math.max(0, 15 - BOUNCE_IMAGE_DECAY * (Date.now() - state.activePlayers[i].bouncetimestap));
+    }
     // keep this player on the screen
     if (state.activePlayers[i].posx < 0 + AVATAR_RADIUS) {
       state.activePlayers[i].posx = 0 + AVATAR_RADIUS;
@@ -271,6 +276,8 @@ function updateVelocityAndPosition(state) {
     if (distance <= BALL_WIDTH / 2 + AVATAR_RADIUS) {   // bounce
       console.log("bounce")
       console.log(randomWords(5));
+      state.activePlayers[i].bounced = true;
+      state.activePlayers[i].bouncetimestap = Date.now();
       state.last_bounce_start = Date.now();
       state.ball.vel_unit.x = (bx - px) / distance; // normalized unit vector
       state.ball.vel_unit.y = (by - py) / distance; // normalized unit vector

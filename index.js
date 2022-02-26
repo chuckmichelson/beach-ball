@@ -4,8 +4,8 @@ const BALL_WIDTH = 64;
 const BALL_HEIGHT = 64;
 
 // ***** CHANGE THIS TO RUN ON HEROKU
-// const socket = io('http://localhost:3000');
-const socket = io('https://gentle-tundra-06259.herokuapp.com/');
+const socket = io('http://localhost:3000');
+// const socket = io('https://gentle-tundra-06259.herokuapp.com/');
 
 
 socket.on('initclient', handleInitClient);  // server sends your client ID to you
@@ -123,9 +123,11 @@ function paintGame(state) {
     } else {
       ctx2.lineWidth = 2;
     }
-    if (state.activePlayers[i].afterimage > 2) {
+    if (state.activePlayers[i].bounced === true) {
       ctx2.strokeStyle = 'yellow';
-      ctx2.lineWidth = state.activePlayers[i].afterimage;
+      if (state.activePlayers[i].afterimage >= 3) {
+        ctx2.lineWidth = state.activePlayers[i].afterimage;
+      }
     }
     drawCircle(ctx2, state.activePlayers[i].posx, state.activePlayers[i].posy, avatar_radius);
     ctx2.font = "18px Copperplate, Papyrus, fantasy";

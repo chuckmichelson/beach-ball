@@ -10,6 +10,7 @@ const BEACH_BALL_DIAMETER = 0.64; // in meters (24" ball)
 const DRAG_COEFFICIENT = -3; // air resistance, in arbitrary units
 const BOUNCE_VELOCITY = 100; // initial velocity of ball right after bounce, in m/s
 const JOYSTICK_MULTIPLIER = 0.05; // for translating arbitrary joystick units into player velocity
+const BOUNCE_IMAGE_DECAY = 0.01;
 
 module.exports = {
   FRAME_RATE,
@@ -24,4 +25,5 @@ module.exports = {
   DRAG_COEFFICIENT,
   BOUNCE_VELOCITY,
   JOYSTICK_MULTIPLIER,
+  BOUNCE_IMAGE_DECAY,
 }
