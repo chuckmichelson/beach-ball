@@ -16,11 +16,8 @@ const BEACH_BALL_ACCELERATION = DRAG_COEFFICIENT / BEACH_BALL_MASS;
 const PIXELS_PER_METER = BALL_WIDTH / BEACH_BALL_DIAMETER;
 
 const { makeid } = require('./utils');
-// const { ouijaGoToLetter } = require('./utils');
-// const { ouijaGetLetter } = require('./utils');
 const { makeArray } = require('./utils');
 const { shuffleArray } = require('./utils');
-// const { getNextBounce } = require('./utils');
 var randomWords = require('random-words');
 
 
@@ -104,6 +101,20 @@ function gameLoop(state) {
   // console.log("made it to gameLoop")
   if (!state) {
     return;
+  }
+
+  // check if the round is complete (everyone bounced the ball)
+  var round_complete = true;
+  for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
+    if (state.activePlayers[i].bounced === false) {
+      round_complete = false;
+    }
+  }
+  if (round_complete === true) {
+    for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
+      state.activePlayers[i].bounced = false;
+      state.activePlayers[i].bouncetimestap = null;
+    }
   }
 
 
