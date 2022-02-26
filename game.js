@@ -229,10 +229,14 @@ function updateVelocityAndPosition(state) {
   // players
   for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
     // console.log("state.activePlayers[i].joyx: " + state.activePlayers[i].joyx)
+
+    // update this player's position
     state.activePlayers[i].velx = state.activePlayers[i].joyx / 40;
     state.activePlayers[i].vely = -state.activePlayers[i].joyy / 40;
     state.activePlayers[i].posx += state.activePlayers[i].velx;
     state.activePlayers[i].posy += state.activePlayers[i].vely;
+
+    // keep this player on the screen
     if (state.activePlayers[i].posx < 0 + AVATAR_RADIUS) {
       state.activePlayers[i].posx = 0 + AVATAR_RADIUS;
     }
@@ -246,7 +250,7 @@ function updateVelocityAndPosition(state) {
       state.activePlayers[i].posy = CANVAS_HEIGHT - AVATAR_RADIUS;
     }
 
-    // distance
+    // distance between this player and the ball
     px = state.activePlayers[i].posx; // + Math.random() / 100;
     py = state.activePlayers[i].posy; // + Math.random() / 100;
     bx = state.ball.pos.x; // + Math.random() / 100;
@@ -255,7 +259,7 @@ function updateVelocityAndPosition(state) {
     distance = Math.sqrt(Math.pow(px - bx, 2) + Math.pow(py - by, 2));
     // console.log(distance)
 
-    // ball
+    // if this player is touching the ball, make the ball bounce
     time_since_bounce = Date.now() - state.last_bounce_start;
     // console.log("time_since_bounce: " + time_since_bounce)
     if (distance <= BALL_WIDTH / 2 + AVATAR_RADIUS) {   // bounce
@@ -276,7 +280,7 @@ function updateVelocityAndPosition(state) {
   velunitx = state.ball.vel_unit.x;
   velunity = state.ball.vel_unit.y;
 
-
+  // kinematic equation to calculate the ball position as a function of time
   state.ball.pos.x = x + BOUNCE_VELOCITY * velunitx * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunitx * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
   state.ball.pos.y = y + BOUNCE_VELOCITY * velunity * (Date.now() - state.last_bounce_start) / 1000 + 1 / 2 * velunity * BEACH_BALL_ACCELERATION * Math.pow((Date.now() - state.last_bounce_start) / 1000, 2);
 
