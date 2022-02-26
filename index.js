@@ -34,6 +34,7 @@ beach.src = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQABLAEsAAD/4QDARXhpZgAATU0A
 ctx1.drawImage(beach,0,0);
 
 document.addEventListener('keydown', keyDown);
+joinGameBtn.addEventListener('click', joinGame);
 
 // set up joystick but don't display it yet
 const joyDiv = document.getElementById('joydiv');
@@ -44,8 +45,6 @@ var joy = {};
 setInterval(function(){ joy.x=Joy2.GetX(); }, 50);
 setInterval(function(){ joy.y=Joy2.GetY(); }, 50);
 
-
-joinGameBtn.addEventListener('click', joinGame);
 
 let myClientID = "";
 joinRoom();
