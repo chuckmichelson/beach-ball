@@ -85,6 +85,7 @@ function addPlayer(state, clientid, playerInitials) {
     afterimage: 0,
     joyx: 0,
     joyy: 0,
+    joytimestamp: 0,
     posx: randx,
     posy: randy,
     velx: 0,
@@ -211,10 +212,10 @@ function recordJoystick(state, clientid, joy) {
    for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
       // console.log("RECORD JOYSTICK: joy.x: " + joy.x)
       match = state.activePlayers[i].clientid === clientid;
-      // console.log("match: " + match)
       if (match === true) {
          state.activePlayers[i].joyx = joy.x;
          state.activePlayers[i].joyy = joy.y;
+         state.activePlayers[i].joytimestamp = Date.now();
          // console.log("Recorded the button press")
          // console.log("state.activePlayers[i].joyx: " + state.activePlayers[i].joyx)
       }
