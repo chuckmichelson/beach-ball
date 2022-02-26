@@ -9,6 +9,7 @@ const { BEACH_BALL_MASS } = require('./constants');
 const { BEACH_BALL_DIAMETER } = require('./constants');
 const { DRAG_COEFFICIENT } = require('./constants');
 const { BOUNCE_VELOCITY } = require('./constants');
+const { JOYSTICK_MULTIPLIER } = require('./constants');
 
 const BEACH_BALL_ACCELERATION = DRAG_COEFFICIENT / BEACH_BALL_MASS;
 const PIXELS_PER_METER = BALL_WIDTH / BEACH_BALL_DIAMETER;
@@ -230,11 +231,12 @@ function updateVelocityAndPosition(state) {
   for ( var i = state.activePlayers.length - 1; i >= 0; i-- ) {
     // console.log("state.activePlayers[i].joyx: " + state.activePlayers[i].joyx)
 
-    // update this player's position
-    state.activePlayers[i].velx = state.activePlayers[i].joyx / 40;
-    state.activePlayers[i].vely = -state.activePlayers[i].joyy / 40;
-    state.activePlayers[i].posx += state.activePlayers[i].velx;
-    state.activePlayers[i].posy += state.activePlayers[i].vely;
+    // update this player's position based on time elapsed since last joystick input
+
+    state.activePlayers[i].velx = state.activePlayers[i].joyx / 100;
+    state.activePlayers[i].vely = -state.activePlayers[i].joyy / 100;
+    state.activePlayers[i].posx += state.activePlayers[i].velx * JOYSTICK_MULTIPLIER * (Date.now() - state.activePlayers[i].joytimestamp);
+    state.activePlayers[i].posy += state.activePlayers[i].vely * JOYSTICK_MULTIPLIER * (Date.now() - state.activePlayers[i].joytimestamp);
 
     // keep this player on the screen
     if (state.activePlayers[i].posx < 0 + AVATAR_RADIUS) {
