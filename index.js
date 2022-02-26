@@ -4,8 +4,8 @@ const BALL_WIDTH = 64;
 const BALL_HEIGHT = 64;
 
 // ***** CHANGE THIS TO RUN ON HEROKU
-// const socket = io('http://localhost:3000');
-const socket = io('https://gentle-tundra-06259.herokuapp.com/');
+const socket = io('http://localhost:3000');
+// const socket = io('https://gentle-tundra-06259.herokuapp.com/');
 
 
 socket.on('initclient', handleInitClient);  // server sends your client ID to you
@@ -149,34 +149,57 @@ function paintGame(state) {
   const top_display1 = document.getElementById("top_display1");
   const top_ctx1 = top_display1.getContext("2d");
   top_ctx1.clearRect(0, 0, 360, 150);
-  top_ctx1.font = "120px Copperplate, Papyrus, fantasy";
+  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.textAlign = "center";
   numActivePlayers = state.activePlayers.length;
   if (numActivePlayers == undefined) {
     numActivePlayers = '1';
   }
-  top_ctx1.fillText(numActivePlayers, 100, 90);
+  top_ctx1.fillText(numActivePlayers, 45, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
-  top_ctx1.font = "24px Copperplate, Papyrus, fantasy";
+  top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
   display_text = "Players"
   if (numActivePlayers == 1) {
     display_text = "Player"
   }
-  top_ctx1.fillText(display_text, 100, 120);
+  top_ctx1.fillText(display_text, 45, 120);
 
-  // display score (number of bounces)
-  top_ctx1.font = "120px Copperplate, Papyrus, fantasy";
+  // display number of rounds
+  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
   bounce_count = state.bounce_count;
-  top_ctx1.fillText(bounce_count, 260, 90);
+  top_ctx1.fillText(bounce_count, 135, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
-  top_ctx1.font = "24px Copperplate, Papyrus, fantasy";
+  top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
+  display_text = "Rounds"
+  if (bounce_count == 1) {
+    display_text = "Round"
+  }
+  top_ctx1.fillText(display_text, 135, 120);
+
+  // display number of bounces
+  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
+  bounce_count = state.bounce_count;
+  top_ctx1.fillText(bounce_count, 225, 90);
+  top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
+  top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
   display_text = "Bounces"
   if (bounce_count == 1) {
     display_text = "Bounce"
   }
-  top_ctx1.fillText(display_text, 260, 120);
+  top_ctx1.fillText(display_text, 225, 120);
 
+  // display score (each bounce adds n points, where n is the number of players in the room)
+  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
+  bounce_count = state.bounce_count;
+  top_ctx1.fillText(bounce_count, 315, 90);
+  top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
+  top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
+  display_text = "Points"
+  if (bounce_count == 1) {
+    display_text = "Point"
+  }
+  top_ctx1.fillText(display_text, 315, 120);
 }
 
 function handleInitClient(clientid) {
