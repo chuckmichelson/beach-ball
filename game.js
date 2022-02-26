@@ -232,11 +232,15 @@ function updateVelocityAndPosition(state) {
     // console.log("state.activePlayers[i].joyx: " + state.activePlayers[i].joyx)
 
     // update this player's position based on time elapsed since last joystick input
-
-    state.activePlayers[i].velx = state.activePlayers[i].joyx / 100;
-    state.activePlayers[i].vely = -state.activePlayers[i].joyy / 100;
-    state.activePlayers[i].posx += state.activePlayers[i].velx * JOYSTICK_MULTIPLIER * (Date.now() - state.activePlayers[i].joytimestamp);
-    state.activePlayers[i].posy += state.activePlayers[i].vely * JOYSTICK_MULTIPLIER * (Date.now() - state.activePlayers[i].joytimestamp);
+    joystick_vector_length = Math.sqrt(Math.pow(state.activePlayers[i].joyx, 2) + Math.pow(state.activePlayers[i].joyy, 2));
+    console.log("joystick_vector_length: " + joystick_vector_length)
+    if (joystick_vector_length < 0.001) {
+      joystick_vector_length = 0.001;
+    }
+    state.activePlayers[i].velx = state.activePlayers[i].joyx * JOYSTICK_MULTIPLIER / joystick_vector_length;
+    state.activePlayers[i].vely = -state.activePlayers[i].joyy * JOYSTICK_MULTIPLIER / joystick_vector_length;
+    state.activePlayers[i].posx += state.activePlayers[i].velx * (Date.now() - state.activePlayers[i].joytimestamp);
+    state.activePlayers[i].posy += state.activePlayers[i].vely * (Date.now() - state.activePlayers[i].joytimestamp);
 
     // keep this player on the screen
     if (state.activePlayers[i].posx < 0 + AVATAR_RADIUS) {
