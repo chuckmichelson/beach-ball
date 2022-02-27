@@ -288,7 +288,6 @@ function updateVelocityAndPosition(state) {
 
     // if this player is touching the ball, make the ball bounce
     time_since_bounce = Date.now() - state.last_bounce_start;
-    // console.log("time_since_bounce: " + time_since_bounce)
     if (distance <= BALL_WIDTH / 2 + AVATAR_RADIUS) {   // bounce
       console.log("bounce")
       console.log(randomWords(5));
