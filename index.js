@@ -149,10 +149,10 @@ function paintGame(state) {
   const top_display1 = document.getElementById("top_display1");
   const top_ctx1 = top_display1.getContext("2d");
   top_ctx1.clearRect(0, 0, 360, 150);
-  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.textAlign = "center";
   numActivePlayers = state.activePlayers.length;
+  top_ctx1.font = getFont(numActivePlayers);
   if (numActivePlayers == undefined) {
     numActivePlayers = '1';
   }
@@ -178,8 +178,9 @@ function paintGame(state) {
   // top_ctx1.fillText(display_text, 135, 120);
 
   // display number of bounces
-  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
+
   bounce_count = state.bounce_count;
+  top_ctx1.font = getFont(bounce_count);
   top_ctx1.fillText(bounce_count, 180, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
@@ -190,8 +191,8 @@ function paintGame(state) {
   top_ctx1.fillText(display_text, 180, 120);
 
   // display score (each bounce adds n points, where n is the number of players in the room)
-  top_ctx1.font = "100px Copperplate, Papyrus, fantasy";
   score_count = state.score_count;
+  top_ctx1.font = getFont(score_count);
   top_ctx1.fillText(score_count, 300, 90);
   top_ctx1.fillStyle = 'rgba(255, 255, 255, .3)';
   top_ctx1.font = "18px Copperplate, Papyrus, fantasy";
@@ -239,3 +240,12 @@ function drawCircle(ctx, x, y, r) {
   ctx.stroke();
 }
 
+function getFont(value) {
+  if (value === 0) {
+    fontsize = 80;
+  }
+  ndigits = Math.ceil(Math.log10(value + 1));
+  fontsize = 100 - 20 * (ndigits-1);
+  console.log("Value: " + value + ", ndigits: " + ndigits + ", fontsize: " + fontsize)
+  return fontsize + "px Copperplate, Papyrus, fantasy";
+}
